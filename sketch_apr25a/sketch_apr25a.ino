@@ -38,13 +38,13 @@ void driveServo() {
 }
 
 void phoCount() {
-  pCount = (pCount + 1) % 8;
+  pCount = (pCount + 1) % 7;
   cal.setSectorTime();
   switch (pCount) {
-    case 1:
+    case 0:
       cal.startTime();
       break;
-    case 7:
+    case 6:
       cal.endTime();
       cal.angleSpeed();
       break;

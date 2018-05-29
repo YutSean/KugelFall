@@ -1,11 +1,11 @@
 #include "calculator.h"
-#define FALL_ZEIT 396.412
+#define FALL_ZEIT 404
 
 
 calculator::calculator() {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 79;
+    latency = 77;
 }
 
 void calculator::startTime() {
