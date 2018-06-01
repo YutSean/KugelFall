@@ -137,7 +137,7 @@ void loop() {
     //Serial.println(Aspeed);
     //Serial.println(millis());
     driveServo();
-    Serial.println(millis());
+    //Serial.println(millis());
     //Serial.println(millis());
   }
   
