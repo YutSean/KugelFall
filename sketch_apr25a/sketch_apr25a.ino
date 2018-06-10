@@ -61,7 +61,7 @@ void halFalling() {
     cal.setAltSpeed();
     kreisCount == 0;
   }
-  
+  cal.setLatency();
   cal.resetSector();
 }
 
@@ -125,6 +125,8 @@ void setup() {
 }
 
 void loop() {
+  //Serial.println(tm.sendSignal());
+  //Serial.println(cal.sectorCount);
   //Serial.println(tm.sendSignal());
   if (tm.sendSignal()) {
     

@@ -14,9 +14,11 @@ class calculator {
     void setSectorTime();
     void setBeschleunigung();
     void setAltSpeed();
-    void setLatency(int t);
+    void setLatency();
+    
 
   private:
+    int sectorCount;
     int aTime;
     double altSpeed;
     int bTime;
@@ -25,6 +27,6 @@ class calculator {
     int eTime;
     double aSpeed;
     double beschleunigung;
-    int sectorCount;
+    
     int latency;
 };

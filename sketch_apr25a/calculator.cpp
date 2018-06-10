@@ -1,11 +1,11 @@
 #include "calculator.h"
-#define FALL_ZEIT 404
+#define FALL_ZEIT 399
 
 
 calculator::calculator() {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 112;
+    latency = 54;
 }
 
 void calculator::startTime() {
@@ -51,7 +51,7 @@ int calculator::predict() {
 //    }
     double sectorAbw = ((millis() - bTime) / 1000.000) * avgSpeed;
     //Serial.println(sectorAbw);
-    double temp = (12 - sectorCount + 1) / 12.0 - sectorAbw;
+    double temp = (12 - sectorCount) / 12.0 - sectorAbw;
     double mittel = numR + temp;
     int t = floor((((mittel / avgSpeed) - (FALL_ZEIT / 1000.000)) * 1000));
     //Serial.println(millis());
@@ -63,6 +63,7 @@ double calculator::getSpeed() {
 }
 
 void calculator::addSector() {
+  //Serial.println(this->sectorCount);
   this->sectorCount++;
 }
 
@@ -85,7 +86,7 @@ void calculator::setAltSpeed() {
   this->aTime = millis();
 }
 
-void calculator::setLatency(int t) {
-  this->latency = t;
+void calculator::setLatency() {
+  latency = 58 - (2/aSpeed);
 }
 
