@@ -6,8 +6,6 @@ class triggerManager {
 
   private:
     int tp;
-  bool getTriggerVal();
-  bool dropped;
-  
+    bool getTriggerVal();
+    bool dropped;
 };
-

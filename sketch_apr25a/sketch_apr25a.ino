@@ -9,12 +9,10 @@
 
 int pCount;
 int kreisCount;
+int lastTime;
 Servo myServo;
 
 bool dropped;
-int geschwendigkeit;
-double timeInterval;
-bool pos;
 
 calculator cal;
 triggerManager tm(TRIGGER_PIN);
@@ -84,6 +82,7 @@ void initial() {
   cal = calculator();
   pCount = 0;
   kreisCount = 0;
+  lastTime = 0;
   //pos = false;
 
   myServo.attach(SERVO_OUTPUT);
@@ -129,12 +128,18 @@ void loop() {
   //Serial.println(cal.sectorCount);
   //Serial.println(tm.sendSignal());
   if (tm.sendSignal()) {
-    
+    if (millis() - lastTime > 0 && millis() - lastTime < 50) {
+      for (int i = 0; i < 4; i++) {
+        delay(cal.predict());
+        driveServo();
+      }
+    }
     //Serial.println(predictTime);
     //double Aspeed = cal.getSpeed();
     //int temp = cal.predict();
     //Serial.println(temp);
     delay(cal.predict());
+    lastTime = millis();
     //Serial.println(predictTime);
     //Serial.println(Aspeed);
     //Serial.println(millis());
@@ -142,7 +147,7 @@ void loop() {
     //Serial.println(millis());
     //Serial.println(millis());
   }
-  
+
   //Serial.println(t);
 
 // int hallVal = digitalRead(HALLSENSOR);

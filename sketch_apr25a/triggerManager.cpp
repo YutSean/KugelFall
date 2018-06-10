@@ -13,11 +13,10 @@ bool triggerManager::sendSignal() {
     } else if (dropped && !getTriggerVal()) {
         this->dropped = false;
         //delay(5);
-    }
+    } else if
     return false;
 }
 
 bool triggerManager::getTriggerVal() {
     return digitalRead(tp);
 }
-
