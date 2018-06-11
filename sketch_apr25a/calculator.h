@@ -14,17 +14,17 @@ class calculator {
     void setSectorTime();
     void setBeschleunigung();
     void setAltSpeed();
-    void setLatency();
+    void setLatency(int t);
     
 
   private:
     int sectorCount;
-    int aTime;
+    unsigned long aTime;
     double altSpeed;
-    int bTime;
+    unsigned long bTime;
     bool pos;
-    int sTime;
-    int eTime;
+    unsigned long sTime;
+    unsigned long eTime;
     double aSpeed;
     double beschleunigung;
     

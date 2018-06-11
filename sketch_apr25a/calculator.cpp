@@ -5,7 +5,7 @@
 calculator::calculator() {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 54;
+    latency = 56;
 }
 
 void calculator::startTime() {
@@ -31,7 +31,7 @@ void calculator::angleSpeed() {
         //Serial.println(beschleunigung);
        // Serial.println(beschleunigung);
         //Serial.println(beschleunigung);
-        Serial.println(altSpeed);
+        //Serial.println(aSpeed);
 //        Serial.println(beschleunigung);
 }
 
@@ -78,15 +78,18 @@ void calculator::setSectorTime() {
 void calculator::setBeschleunigung() {
   
   beschleunigung = (aSpeed - altSpeed) / ((millis() - aTime) / 1000.0);
+  Serial.println(0);
   
 }
 
 void calculator::setAltSpeed() {
+    Serial.println(2);
+
   this->altSpeed = aSpeed;
   this->aTime = millis();
 }
 
-void calculator::setLatency() {
-  latency = 58 - (2/aSpeed);
+void calculator::setLatency(int t) {
+  latency = t;
 }
 

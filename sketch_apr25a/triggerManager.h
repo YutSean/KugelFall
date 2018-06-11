@@ -2,7 +2,7 @@
 class triggerManager {
   public:
   triggerManager(int trigger_pin);
-  bool sendSignal();
+  int sendSignal();
 
   private:
     int tp;

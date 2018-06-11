@@ -53,13 +53,14 @@ void phoCount() {
 void halFalling() {
   //pos = false;
   //cal.setBesch();
+  Serial.println(kreisCount);
   kreisCount ++;
-  if (kreisCount == 5) {
+  if (kreisCount == 2) {
     cal.setBeschleunigung();
     cal.setAltSpeed();
-    kreisCount == 0;
+    kreisCount = 0;
   }
-  cal.setLatency();
+  //cal.setLatency(i);
   cal.resetSector();
 }
 
@@ -123,31 +124,46 @@ void setup() {
 
 }
 
+
 void loop() {
   //Serial.println(tm.sendSignal());
   //Serial.println(cal.sectorCount);
   //Serial.println(tm.sendSignal());
-  if (tm.sendSignal()) {
-    if (millis() - lastTime > 0 && millis() - lastTime < 50) {
-      for (int i = 0; i < 4; i++) {
-        delay(cal.predict());
-        driveServo();
-      }
+  //Serial.println(lastTime);
+//  Serial.println(tm.sendSignal());
+//  if (tm.sendSignal()) {
+//    Serial.println(tm.sendSignal());
+    for (int i = tm.sendSignal(); i > 0; i--) {
+      delay(cal.predict());
+      driveServo();
+      cal.setLatency(112);
+      delay(80);
     }
+    cal.setLatency(56);
+     //Serial.println(1);
+//    if (checkClick()) {
+//      Serial.println(2);
+//    }
+//    if (false) {
+//      //Serial.println(lastTime);
+//      
+//      for (int i = 0; i < 4; i++) {
+//        delay(cal.predict());
+//        driveServo();
+//      }
+//    }
     //Serial.println(predictTime);
     //double Aspeed = cal.getSpeed();
     //int temp = cal.predict();
     //Serial.println(temp);
-    delay(cal.predict());
-    lastTime = millis();
+   // delay(cal.predict());
+   // lastTime = millis();
     //Serial.println(predictTime);
     //Serial.println(Aspeed);
     //Serial.println(millis());
-    driveServo();
+//    driveServo();
     //Serial.println(millis());
     //Serial.println(millis());
-  }
-
   //Serial.println(t);
 
 // int hallVal = digitalRead(HALLSENSOR);
