@@ -1,59 +1,45 @@
 #include "calculator.h"
-#define FALL_ZEIT 399
+#define FALL_ZEIT 400
 
 
 calculator::calculator() {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 56;
+    latency = 85;
 }
 
 void calculator::startTime() {
     sTime = millis();
-    //Serial.print("Stime:");
-    //Serial.println(sTime);
 }
 
 void calculator::endTime() {
     eTime = millis();
-   // Serial.print("Etime:");
-    //Serial.println(eTime);
 }
 
+//this function calculate the angle speed of the scheibe
 void calculator::angleSpeed() {
-    
-        double t = (eTime - sTime)/1000.00;
-        //Serial.println(t);
+        
+        double t = eTime - sTime;
         altSpeed = aSpeed;
+        //eigenheit round per milisecond
         aSpeed = 0.5 / t;
-                    //Serial.println("Speed");
 
-        //Serial.println(beschleunigung);
-       // Serial.println(beschleunigung);
-        //Serial.println(beschleunigung);
-        //Serial.println(aSpeed);
-//        Serial.println(beschleunigung);
 }
 
+//this function return the length of the wait time for servo motor
 int calculator::predict() {
-    //Serial.println(millis());
-    double avgSpeed = (aSpeed + (FALL_ZEIT / 1000.000 * beschleunigung + aSpeed)) / 2.0;
-    
-    int numR = floor((avgSpeed * (FALL_ZEIT / 1000.000)));
+    //evaluate the average speed of the scheibe in the kugel fall time
+    double avgSpeed = (aSpeed + (FALL_ZEIT * beschleunigung + aSpeed)) / 2.0;
+
+    double distance = avgSpeed * FALL_ZEIT;
+    int numR = floor(avgSpeed * FALL_ZEIT);
     numR++;
-    
-//    double abstand = distance - (int)distance;
-//    Serial.println(abstand);
-//    int t = ((abstand / avgSpeed) * 1000);
-//    //Serial.println(t);
-//    if (pos) {
-//      t += 0.5 / avgSpeed;
-//    }
-    double sectorAbw = ((millis() - bTime) / 1000.000) * avgSpeed;
-    //Serial.println(sectorAbw);
+    //intra sector bias
+    double sectorAbw = (millis() - bTime) * avgSpeed;
     double temp = (12 - sectorCount) / 12.0 - sectorAbw;
+    
     double mittel = numR + temp;
-    int t = floor((((mittel / avgSpeed) - (FALL_ZEIT / 1000.000)) * 1000));
+    int t = floor((mittel / avgSpeed) - FALL_ZEIT);
     //Serial.println(millis());
     return t - latency;  
 }
@@ -63,7 +49,6 @@ double calculator::getSpeed() {
 }
 
 void calculator::addSector() {
-  //Serial.println(this->sectorCount);
   this->sectorCount++;
 }
 
@@ -75,15 +60,13 @@ void calculator::setSectorTime() {
   this->bTime = millis();
 }
 
+//calculate the accelerated speed
 void calculator::setBeschleunigung() {
-  
-  beschleunigung = (aSpeed - altSpeed) / ((millis() - aTime) / 1000.0);
-  Serial.println(0);
-  
+  beschleunigung = (aSpeed - altSpeed) / (millis() - aTime); 
 }
 
+//update the early speed for the next time to calculate the accelerated speed
 void calculator::setAltSpeed() {
-    Serial.println(2);
 
   this->altSpeed = aSpeed;
   this->aTime = millis();

@@ -5,20 +5,18 @@ triggerManager::triggerManager(int trigger_pin) {
     dropped = false;
 }
 
+//if just one click return 1, double click return 5, else return 0
 int triggerManager::sendSignal() {
-  //Serial.println(dropped);
     if (getTriggerVal() && !dropped) {
-      //int start = millis();
       double start = (double) millis();
       while (true){
         if (getTriggerVal() == false){
-          //Serial.println(123123);
           break;
         }
       }
 
+      //time for human reflection
       delay(200);
-      //Serial.println(millis()-start);
       while(millis() - start < 300) {
         if (getTriggerVal()) {
           
@@ -31,11 +29,11 @@ int triggerManager::sendSignal() {
         return 1;
     } else if (dropped && !getTriggerVal()) {
         this->dropped = false;
-        //delay(5);
     }
     return 0;
 }
 
+//read the value of trigger
 bool triggerManager::getTriggerVal() {
     return digitalRead(tp);
 }
