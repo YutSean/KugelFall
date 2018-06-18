@@ -49,9 +49,8 @@ void hallFalling() {
   //when the value of hall sensor falls run this function
   //every 2 runds calculate once the accelerate speed
   kreisCount ++;
-  if (kreisCount == 2) {
+  if (kreisCount == 2 ) {
     cal.setBeschleunigung();
-    
     cal.setAltSpeed();                                     //update the speed
     kreisCount = 0;
   }
@@ -80,7 +79,6 @@ void initial() {
 
 void setup() {
   initial();
-
 }
 
 
@@ -90,8 +88,6 @@ void loop() {
       int t1 = cal.predict();
       delay(cal.predict());
       driveServo();
-      cal.setLatency(74);
       delay(200);                               //wait the time, in which the Servo motor reset itself
     }
-    cal.setLatency(78);
 }

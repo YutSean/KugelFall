@@ -5,7 +5,7 @@
 calculator::calculator() {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 85;
+    latency = 75;
 }
 
 void calculator::startTime() {
@@ -19,9 +19,8 @@ void calculator::endTime() {
 //this function calculate the angle speed of the scheibe
 void calculator::angleSpeed() {
         
-        double t = eTime - sTime;
-        altSpeed = aSpeed;
-        //eigenheit round per milisecond
+        double t = (eTime - sTime) / 1000.0;
+        //eigenheit round per second
         aSpeed = 0.5 / t;
 
 }
@@ -29,17 +28,17 @@ void calculator::angleSpeed() {
 //this function return the length of the wait time for servo motor
 int calculator::predict() {
     //evaluate the average speed of the scheibe in the kugel fall time
-    double avgSpeed = (aSpeed + (FALL_ZEIT * beschleunigung + aSpeed)) / 2.0;
+    double avgSpeed = (aSpeed + (FALL_ZEIT / 1000.0 * beschleunigung + aSpeed)) / 2.0;
 
-    double distance = avgSpeed * FALL_ZEIT;
-    int numR = floor(avgSpeed * FALL_ZEIT);
+    double distance = avgSpeed * FALL_ZEIT / 1000.0;
+    int numR = floor(avgSpeed * FALL_ZEIT / 1000.0);
     numR++;
     //intra sector bias
-    double sectorAbw = (millis() - bTime) * avgSpeed;
+    double sectorAbw = (millis() - bTime) / 1000.0 * avgSpeed;
     double temp = (12 - sectorCount) / 12.0 - sectorAbw;
     
     double mittel = numR + temp;
-    int t = floor((mittel / avgSpeed) - FALL_ZEIT);
+    int t = floor((mittel / avgSpeed) * 1000.0) - FALL_ZEIT;
     //Serial.println(millis());
     return t - latency;  
 }
@@ -62,14 +61,17 @@ void calculator::setSectorTime() {
 
 //calculate the accelerated speed
 void calculator::setBeschleunigung() {
-  beschleunigung = (aSpeed - altSpeed) / (millis() - aTime); 
+  beschleunigung = (aSpeed - altSpeed) / ((millis() - aTime) / 1000.0); 
+  Serial.println(beschleunigung);
+  
 }
 
 //update the early speed for the next time to calculate the accelerated speed
 void calculator::setAltSpeed() {
-
-  this->altSpeed = aSpeed;
-  this->aTime = millis();
+  
+  altSpeed = aSpeed;
+  aTime = millis();
+  
 }
 
 void calculator::setLatency(int t) {
