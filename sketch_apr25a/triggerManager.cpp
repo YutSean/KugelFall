@@ -8,7 +8,7 @@ triggerManager::triggerManager(int trigger_pin) {
 //if just one click return 1, double click return 5, else return 0
 int triggerManager::sendSignal() {
     if (getTriggerVal() && !dropped) {
-      double start = (double) millis();
+      unsigned long start = millis();
       while (true){
         if (getTriggerVal() == false){
           break;

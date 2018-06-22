@@ -2,10 +2,10 @@
 #define FALL_ZEIT 400
 
 
-calculator::calculator() {
+calculator::calculator(int l) {
     aSpeed = 0;
     beschleunigung = 0;
-    latency = 75;
+    latency = l;
 }
 
 void calculator::startTime() {
@@ -62,7 +62,7 @@ void calculator::setSectorTime() {
 //calculate the accelerated speed
 void calculator::setBeschleunigung() {
   beschleunigung = (aSpeed - altSpeed) / ((millis() - aTime) / 1000.0); 
-  Serial.println(beschleunigung);
+  Serial.println(aSpeed);
   
 }
 

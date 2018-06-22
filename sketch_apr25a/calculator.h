@@ -3,7 +3,7 @@
 
 class calculator {
   public:
-    calculator();
+    calculator(int l);
     void  startTime();         //save the left bound of the time interval to calculate the angle speed
     void  endTime();           //save the right bound of the time interval to calculate the angle speed
     void angleSpeed();         //calculate the angle speed with units rpms

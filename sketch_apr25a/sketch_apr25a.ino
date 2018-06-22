@@ -6,6 +6,7 @@
 #define HALLSENSOR 3
 #define PHOTOSENSOR 2
 #define SERVO_OUTPUT 9
+#define SERVO_WINKEL 35
 
 int pCount;
 int kreisCount;
@@ -13,18 +14,18 @@ Servo myServo;
 
 bool dropped;
 
-calculator cal;
+calculator cal((SERVO_WINKEL * 3 + 1) / 2);
 triggerManager tm(TRIGGER_PIN);
 
 //drive servo motor to release the ball
 void driveServo() {
 
-   for (int pos = 0; pos <= 45; pos++) {
+   for (int pos = 0; pos <= SERVO_WINKEL; pos++) {
       myServo.write(pos);
       delay(3);
    }
 
-   for (int pos = 45; pos >= 0; pos--) {
+   for (int pos = SERVO_WINKEL; pos >= 0; pos--) {
       myServo.write(pos);
    }
 }
@@ -68,7 +69,7 @@ void initial() {
   attachInterrupt(digitalPinToInterrupt(HALLSENSOR), hallFalling, FALLING);
 
   tm = triggerManager(TRIGGER_PIN);
-  cal = calculator();
+  //cal = calculator(SERVO_WINKEL * 3 / 2);
   pCount = 0;
   kreisCount = 0;
 
